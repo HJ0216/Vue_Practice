@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Monster Slayer</h1>
+    </header>
+    <div id="game">
+      <section id="monster" class="container">
+        <h2>Monster Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" :style="monsterBarStyles"></div>
+          <!-- 값을 받아서 크기를 조정하는 일의 경우, css 대신 inline 사용 -->
+        </div>
+      </section>
+      <section id="player" class="container">
+        <h2>Your Health</h2>
+        <div class="healthbar">
+          <div class="healthbar__value" :style="playerBarStyles"></div>
+        </div>
+      </section>
+      <section class="container" v-if="winner">
+        <h2>Game Over!</h2>
+        <h3 v-if="winner === 'monster'">You lost!</h3>
+        <h3 v-else-if="winner === 'player'">You won!</h3>
+        <h3 v-else>It's a draw!</h3>
+        <button @click="startGame">Start New Game</button>
+      </section>
+      <section id="controls" v-else>
+        <button @click="attackMonster">ATTACK</button>
+        <button :disabled="mayUserSpecialAttack" @click="specialAttackMonster">SPECIAL ATTACK</button>
+        <button @click="healPlayer">HEAL</button>
+        <button @click="surrender">SURRENDER</button>
+      </section>
+      <section id="log" class="container">
+        <h2>Battle Log</h2>
+        <ul>
+          <li v-for="logMessage in logMessages">
+            <span :class="{'log--player': logMessage.actionBy === 'player', 'log--monster': logMessage.actionBy === 'monster'}">{{logMessage.actionBy === 'player' ? 'Player' : 'Monster'}}</span>
+            <!-- 'log--player': logMessage.actionBy === 'player': 만약 logMessage.actionBy의 값이 'player'와 같다면, 'log--player' 클래스 적용 -->
+            <span v-if="logMessage.actionType === 'heal'">
+              Heals himself for
+              <span class="log--heal">{{logMessage.actionValue}}</span>
+            </span>
+            <span v-else>stacks and deals
+              <span class="log--damage">{{logMessage.actionValue}}</span>
+            </span>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>
+
+<!-- html에는 논리 logic 최소로 작성하기 -->
+<!-- 
+  v-on: = @
+  v-bind: = :
+ -->

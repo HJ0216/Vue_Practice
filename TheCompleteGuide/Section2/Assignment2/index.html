@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Events</h1>
+    </header>
+    <section id="assignment">
+      <h2>Event Practice</h2>
+      <button v-on:click="showAlert()">Show Alert</button>
+      <hr />
+      <!-- 2) Register the user input on "keydown" and output it in the paragraph (hint: event.target.value helps) -->
+      <input type="text" v-on:input="updateOutput"/>
+      <!-- v-on:input="updateOutput()"와 같이 괄호를 붙여 메서드를 호출하게 되면, 
+      이벤트 객체를 수동으로 전달해주어야 하며, 
+      해당 사례에서는 이벤트 객체 없이 메서드가 호출되어 예상대로 동작하지 않음 -->
+      <p>{{output}}</p>
+      <hr />
+      <!-- 3) Repeat 2) but only output the entered value if the ENTER key was pressed -->
+      <input type="text" v-on:keyup.enter="confirmOuptput($event)"/>
+      <p>{{enteredOutput}}</p>
+    </section>
+  </body>
+</html>
